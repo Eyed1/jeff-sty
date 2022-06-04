@@ -371,6 +371,30 @@
         postheadspace={5pt}
     ]{greenboxleft}
 
+    \mdfdefinestyle{mdredboxleft}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=Red!8,
+        linecolor=Red
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdredboxleft},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{redboxleft}
 
 
 
@@ -381,6 +405,7 @@
     \declaretheorem[style=blackboxleft,numbered=no]{remark}
     \declaretheorem[style=orangeboxleft,numbered=no]{claim}
     \declaretheorem[style=greenboxleft,numbered=no]{lemma}
+    \declaretheorem[style=redboxleft,numbered=no]{proposition}
     \declaretheorem[style=definition, numbered=no]{walkthrough}
 \else
     \mdfdefinestyle{mdblackbox}{
