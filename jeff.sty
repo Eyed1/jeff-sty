@@ -6,6 +6,7 @@
 \newif\iftikzsetup\tikzsetuptrue
 \newif\ifboxthm\boxthmtrue
 \newif\ifcolorthm\colorthmfalse
+\newif\ifnumberedlemma\numberedlemmafalse
 
 \DeclareOption{default}{
     \fancyhdrtrue
@@ -20,6 +21,14 @@
     \smallmarginfalse
     \tikzsetuptrue
     \colorthmtrue
+}
+
+\DeclareOption{blackwhite}{
+    \fancyhdrtrue
+    \normalmargintrue
+    \smallmarginfalse
+    \tikzsetuptrue
+    \colorthmfalse
 }
 
 \ProcessOptions\relax
@@ -260,7 +269,7 @@
         innerrightmargin=8pt,
         nobreak=true,
         backgroundcolor=WildStrawberry!8,
-        linecolor=Red!60!black
+        linecolor=Red!70!black
 %        roundcorner=5pt
     }
     \declaretheoremstyle[
@@ -305,7 +314,7 @@
         rightline=false,
         bottomline=false,
         innerbottommargin=6pt,
-        innertopmargin=8pt,
+        innertopmargin=10pt,
         innerleftmargin=8pt,
         innerrightmargin=8pt,
         nobreak=true,
@@ -330,7 +339,7 @@
         rightline=false,
         bottomline=false,
         innerbottommargin=6pt,
-        innertopmargin=8pt,
+        innertopmargin=10pt,
         innerleftmargin=8pt,
         innerrightmargin=8pt,
         nobreak=true,
@@ -354,7 +363,7 @@
         rightline=false,
         bottomline=false,
         innerbottommargin=6pt,
-        innertopmargin=8pt,
+        innertopmargin=10pt,
         innerleftmargin=8pt,
         innerrightmargin=8pt,
         nobreak=true,
@@ -379,11 +388,11 @@
         rightline=false,
         bottomline=false,
         innerbottommargin=6pt,
-        innertopmargin=8pt,
+        innertopmargin=10pt,
         innerleftmargin=8pt,
         innerrightmargin=8pt,
         nobreak=true,
-        backgroundcolor=Red!8,
+        backgroundcolor=OrangeRed!8,
         linecolor=Red
     }
     \declaretheoremstyle[
@@ -399,24 +408,36 @@
 
 
     \declaretheorem[style=orangebox,numberwithin=section]{theorem}
+    \declaretheorem[style=orangebox,numberwithin=section,sibling=theorem]{corollary}
+    \declaretheorem[style=orangebox,numberwithin=section,sibling=theorem]{proposition}
+    \declaretheorem[style=orangebox,numberwithin=section,sibling=theorem]{lemma}
     \declaretheorem[style=greenbox,numberwithin=section,sibling=theorem]{example}
     \declaretheorem[style=bluebox,numberwithin=section,sibling=theorem]{definition}
     \declaretheorem[style=redbox,numberwithin=section,sibling=theorem]{exercise}
     \declaretheorem[style=blackboxleft,numbered=no]{remark}
-    \declaretheorem[style=orangeboxleft,numbered=no]{claim}
-    \declaretheorem[style=greenboxleft,numbered=no]{lemma}
-    \declaretheorem[style=redboxleft,numbered=no]{proposition}
+    \declaretheorem[style=greenboxleft,numbered=no]{claim}
+    \ifnumberedlemma
+        \declaretheorem[style=orangeboxleft,sibling=theorem]{lemmaSol}
+        \declaretheorem[style=redboxleft,sibling=theorem]{propositionSol}
+    \else
+        \declaretheorem[style=orangeboxleft,name=Lemma, numbered=no]{lemma*}
+        \declaretheorem[style=redboxleft,name=Proposition,numbered=no]{proposition*}
+    \fi
     \declaretheorem[style=definition, numbered=no]{walkthrough}
+    \declaretheorem[style=definition, numberwithin=section]{problem}
 \else
+
     \mdfdefinestyle{mdblackbox}{
-        linewidth=0.5pt,
-        skipabove=8pt
+        linewidth=1pt,
+        skipabove=8pt,
         skipbelow=0pt,
-        innerbottommargin=10pt,
+        innerbottommargin=6pt,
         innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
         nobreak=true,
-        backgroundcolor=gray!5,
-        linecolor=black,
+        backgroundcolor=gray!7,
+        linecolor=black
     }
     \declaretheoremstyle[
         headfont=\bfseries,
@@ -424,22 +445,79 @@
         spacebelow=1pt,
         mdframed={style=mdblackbox},
         bodyfont=\normalfont,
-        headpunct={\\[2pt]},
-        postheadspace={0pt}
+        headpunct={.},
+        postheadspace={5pt}
     ]{blackbox}
-    
-    \declaretheorem[
-    style=blackbox,
-    numberwithin=section,
-    name=Theorem
-    ]{theorem}
-    
-    \declaretheorem[
-    style=blackbox,
-    name=Lemma,
-    numberwithin=section,
-    sibling=theorem,
-    ]{lemma}
+
+    \mdfdefinestyle{mdblackboxnol}{
+        linewidth=0pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=gray!10,
+        linecolor=black
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdblackboxnol},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{blackboxnol}
+
+    \mdfdefinestyle{mdblackboxleft}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=10pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=gray!7,
+        linecolor=black
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdblackboxleft},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{blackboxleft}
+
+    \declaretheorem[style=blackbox,numberwithin=section]{theorem}
+    \declaretheorem[style=blackbox,numberwithin=section,sibling=theorem]{corollary}
+    \declaretheorem[style=blackbox,numberwithin=section,sibling=theorem]{proposition}
+    \declaretheorem[style=blackbox,numberwithin=section,sibling=theorem]{lemma}
+    \declaretheorem[style=blackbox,numberwithin=section,sibling=theorem]{example}
+    \declaretheorem[style=blackboxnol,numberwithin=section,sibling=theorem]{definition}
+    \declaretheorem[style=blackboxleft,numberwithin=section,sibling=theorem]{exercise}
+    \declaretheorem[style=blackboxleft,numbered=no]{remark}
+    \declaretheorem[style=blackboxleft,numbered=no]{claim}
+    \ifnumberedlemma
+        \declaretheorem[style=blackboxleft,sibling=theorem]{lemmaSol}
+        \declaretheorem[style=blackboxleft,sibling=theorem]{propositionSol}
+    \else
+        \declaretheorem[style=blackboxleft,name=Lemma, numbered=no]{lemma*}
+        \declaretheorem[style=blackboxleft,name=Proposition,numbered=no]{proposition*}
+    \fi
+    \declaretheorem[style=definition, numbered=no]{walkthrough}
+    \declaretheorem[style=definition, numberwithin=section]{problem}
+
     
 \fi
 
