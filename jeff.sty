@@ -1,0 +1,423 @@
+\ProvidesPackage{jeff}
+
+\newif\ifsmallmargin\smallmargintrue
+\newif\ifnormalmargin\normalmarginfalse
+\newif\iffancyhdr\fancyhdrtrue
+\newif\iftikzsetup\tikzsetuptrue
+\newif\ifboxthm\boxthmtrue
+\newif\ifcolorthm\colorthmfalse
+
+\DeclareOption{default}{
+    \fancyhdrtrue
+    \smallmargintrue
+    \tikzsetuptrue
+    \boxthmtrue
+}
+
+\DeclareOption{handout}{
+    \fancyhdrtrue
+    \normalmargintrue
+    \smallmarginfalse
+    \tikzsetuptrue
+    \colorthmtrue
+}
+
+
+
+\ProcessOptions\relax
+
+
+
+%% Sets size and margins
+%\usepackage[letterpaper,top=2cm,bottom=2cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
+\usepackage{setspace}
+\setlength{\parskip}{1ex}
+\setlength{\parindent}{1em}
+%\setlength{\marginparwidth}{2cm}
+%\setlength{\headheight}{20.5pt}
+
+
+% Packages
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{authblk}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage{tcolorbox}
+\usepackage{titling}
+\usepackage{tikz}
+\usepackage{thmtools}
+%ryan packages <3
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+
+% Definitions
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\FF}[1]{\mathbb{F}_{#1}}
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+\newcommand{\abs}[1]{\left\lvert #1 \right\rvert}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\legendre}[2]{\genfrac{(}{)}{}{}{#1}{#2}}
+\newcommand{\stirling}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\ve}[1]{\overrightarrow{#1}}
+\newcommand{\cycsum}{\sum_{\mathrm{cyc}}}
+\newcommand{\symsum}{\sum_{\mathrm{sym}}}
+\newcommand{\cycprod}{\prod_{\mathrm{cyc}}}
+\newcommand{\symprod}{\prod_{\mathrm{sym}}}
+
+\newcommand{\ie}{\emph{i.e.}}
+\newcommand{\eg}{\emph{e.g.}}
+\newcommand{\etal}{{\em et al. }}
+\newcommand{\ryan}[1]{\textcolor{purple}{[Ryan:#1]}}
+\newcommand{\jeff}[1]{\textcolor{orange}{[Jeff:#1]}}
+
+\newcommand{\argmin}{\text{argmin}}
+\newcommand{\sign}{\text{sign}}
+\newcommand{\median}{\text{median}}
+
+\DeclareMathOperator{\lcm}{lcm}
+\DeclareMathOperator{\cis}{cis}
+\DeclareMathOperator{\ord}{ord}
+
+
+% Arcs annoying :(
+%\usepackage{arcs}
+%\usepackage{etoolbox}
+%\makeatletter
+%\providecommand\@gobblethree[3]{}
+%\patchcmd{\over@under@arc}
+ %{\@gobbletwo}
+  %{\@gobblethree}
+  %{}{}
+%\makeatother
+
+
+% Table packages
+\usepackage{array}
+\newcolumntype{P}[1]{>{\centering\arraybackslash}p{#1}}
+\usepackage{multirow}
+\usepackage{tabularx}
+
+
+%\newtheorem{theorem}{Theorem}[section]
+%
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{lemma}[theorem]{Lemma}
+%
+%\theoremstyle{definition}
+%\newtheorem{definition}[theorem]{Definition}
+%
+%\theoremstyle{remark}
+%\newtheorem{remark}[theorem]{Remark}
+%
+%Colors
+\definecolor{Aqua}{HTML}{00FFFF}
+
+%Theorem Style Test
+%\declaretheorem[numberwithin=section, name=Deez Nuts]{theoremS}
+%\declaretheorem[numberwithin=section, sibling=theoremS]{lemma}
+
+\ifsmallmargin
+    \geometry{letterpaper, top=1.5cm,bottom=2cm,left=2cm,right=2cm}
+    \setlength{\marginparwidth}{2cm}
+    \setlength{\headsep}{0.4cm}
+    \setlength{\headheight}{1.0cm}
+
+\fi
+\ifnormalmargin
+    \geometry{letterpaper, margin=1in} 
+    \setlength{\marginparwidth}{2cm}
+    \setlength{\headsep}{0.7cm}
+    \setlength{\headheight}{1.7cm}
+
+\fi
+
+\iffancyhdr
+    \usepackage{fancyhdr}
+    \pagestyle{fancy}
+    \lhead{\thetitle}
+    \rhead{\theauthor}
+    \renewcommand{\headrulewidth}{1.5pt}
+%   \setlength{\headrulewidth}{2pt}
+\fi
+
+\iftikzsetup
+    \tikzstyle{rednodefill}=[circle, draw=red!80, fill=red!80, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{bluenodefill}=[circle, draw=blue!80, fill=blue!80, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{greennodefill}=[circle, draw=green!80, fill=green!80, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{yellownodefill}=[circle, draw=yellow!80, fill=yellow!80, inner sep = 0pt, minimum size = 3mm]
+     \tikzstyle{blacknodefill}=[circle, draw=black!80, fill=black!80, inner sep = 0pt, minimum size = 3mm]
+    
+ 
+    \tikzstyle{rednode}=[circle, draw=red!80, fill=red!5, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{bluenode}=[circle, draw=blue!80, fill=blue!5, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{greennode}=[circle, draw=green!80, fill=green!5, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{yellownode}=[circle, draw=yellow!80, fill=yellow!5, inner sep = 0pt, minimum size = 3mm]
+    \tikzstyle{blacknode}=[circle, draw=black!80, fill=black!5, inner sep = 0pt, minimum size = 3mm]
+
+    \tikzstyle{smalldot}=[circle, draw=black, fill=black, inner sep = 0pt, minimum size = 0.5mm]
+    \tikzstyle{dot}=[circle, draw=black, fill=black, inner sep = 0pt, minimum size = 1mm]
+    \tikzstyle{bigdot}=[circle, draw=black, fill=black, inner sep = 0pt, minimum size = 1.5mm]
+
+%% Tikz setup for grids - cells and scaling integration 
+    \newcommand{\drawgrid}[5]{
+        \draw[step=#5, black, thick] (\the\dimexpr #5*#1, \the\dimexpr #5*#2) grid (\the\dimexpr #5*#3, \the\dimexpr #5*#4);
+    }
+    \newcommand{\dotgrid}[6]{
+        \foreach \x in {#1,...,#3}
+            \foreach \y in {#2,...,#4}
+                \node[#6] at (\x*#5, \y*#5) {};
+   }
+    \newcommand{\redcell}[3]{
+        \filldraw[red!80] (\the\dimexpr #3*#1, \the\dimexpr #3*#2) rectangle (\the\dimexpr #3*#1 + #3, \the\dimexpr #3*#2 + #3);
+    }
+    \newcommand{\bluecell}[3]{
+        \filldraw[blue!80] (\the\dimexpr #3*#1, \the\dimexpr #3*#2) rectangle (\the\dimexpr #3*#1 + #3, \the\dimexpr #3*#2 + #3);
+    }
+    \newcommand{\greencell}[3]{
+        \filldraw[green!80] (\the\dimexpr #3*#1, \the\dimexpr #3*#2) rectangle (\the\dimexpr #3*#1 + #3, \the\dimexpr #3*#2 + #3);
+    }
+    \newcommand{\yellowcell}[3]{
+        \filldraw[yellow!80] (\the\dimexpr #3*#1, \the\dimexpr #3*#2) rectangle (\the\dimexpr #3*#1 + #3, \the\dimexpr #3*#2 + #3);
+    }
+    \newcommand{\blackcell}[3]{
+        \filldraw[black!50] (\the\dimexpr #3*#1, \the\dimexpr #3*#2) rectangle (\the\dimexpr #3*#1 + #3, \the\dimexpr #3*#2 + #3);
+    }
+\fi
+
+\ifboxthm
+\usepackage[framemethod=TikZ]{mdframed}
+
+\ifcolorthm
+    \mdfdefinestyle{mdorangebox}{
+        linewidth=1.2pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        innerbottommargin=10pt,
+        innertopmargin=10pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=orange!8,
+        linecolor=RedOrange!60!black,
+        %roundcorner=5pt
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdorangebox},
+        bodyfont=\normalfont,
+        headpunct={.\\[2pt]},
+        postheadspace={0pt}
+    ]{orangebox}
+
+    \mdfdefinestyle{mdgreenbox}{
+        linewidth=1.2pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        innerbottommargin=8pt,
+        innertopmargin=10pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=ForestGreen!8,
+        linecolor=PineGreen!60!black,
+%        roundcorner=5pt
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdgreenbox},
+        bodyfont=\normalfont,
+        headpunct={.\\[2pt]},
+        postheadspace={0pt}
+    ]{greenbox}
+
+    \mdfdefinestyle{mdredbox}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=WildStrawberry!8,
+        linecolor=Red!60!black
+%        roundcorner=5pt
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdredbox},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{redbox}
+
+    
+    \mdfdefinestyle{mdbluebox}{
+        linewidth=0pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        innerbottommargin=8pt,
+        innertopmargin=10pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=SkyBlue!15,
+        linecolor=NavyBlue!60!black,
+%        roundcorner=5pt
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdbluebox},
+        bodyfont=\normalfont,
+        headpunct={.\\[2pt]},
+        postheadspace={0pt}
+    ]{bluebox}
+
+    \mdfdefinestyle{mdblackboxleft}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=gray!8,
+        linecolor=black!80
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdblackboxleft},
+        bodyfont=\small\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{blackboxleft}
+
+    \mdfdefinestyle{mdorangeboxleft}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=orange!10,
+        linecolor=BurntOrange
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdorangeboxleft},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{orangeboxleft}
+    \mdfdefinestyle{mdgreenboxleft}{
+        linewidth=3.5pt,
+        skipabove=8pt,
+        skipbelow=0pt,
+        topline=false,
+        rightline=false,
+        bottomline=false,
+        innerbottommargin=6pt,
+        innertopmargin=8pt,
+        innerleftmargin=8pt,
+        innerrightmargin=8pt,
+        nobreak=true,
+        backgroundcolor=ForestGreen!8,
+        linecolor=Green
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdgreenboxleft},
+        bodyfont=\normalfont,
+        headpunct={.},
+        postheadspace={5pt}
+    ]{greenboxleft}
+
+
+
+
+    \declaretheorem[style=orangebox,numberwithin=section]{theorem}
+    \declaretheorem[style=greenbox,numberwithin=section,sibling=theorem]{example}
+    \declaretheorem[style=bluebox,numberwithin=section,sibling=theorem]{definition}
+    \declaretheorem[style=redbox,numberwithin=section,sibling=theorem]{exercise}
+    \declaretheorem[style=blackboxleft,numbered=no]{remark}
+    \declaretheorem[style=orangeboxleft,numbered=no]{claim}
+    \declaretheorem[style=greenboxleft,numbered=no]{lemma}
+    \declaretheorem[style=definition, numbered=no]{walkthrough}
+\else
+    \mdfdefinestyle{mdblackbox}{
+        linewidth=0.5pt,
+        skipabove=8pt
+        skipbelow=0pt,
+        innerbottommargin=10pt,
+        innertopmargin=8pt,
+        nobreak=true,
+        backgroundcolor=gray!5,
+        linecolor=black,
+    }
+    \declaretheoremstyle[
+        headfont=\bfseries,
+        spaceabove=1pt,
+        spacebelow=1pt,
+        mdframed={style=mdblackbox},
+        bodyfont=\normalfont,
+        headpunct={\\[2pt]},
+        postheadspace={0pt}
+    ]{blackbox}
+    
+    \declaretheorem[
+    style=blackbox,
+    numberwithin=section,
+    name=Theorem
+    ]{theorem}
+    
+    \declaretheorem[
+    style=blackbox,
+    name=Lemma,
+    numberwithin=section,
+    sibling=theorem,
+    ]{lemma}
+    
+\fi
+
+\fi
