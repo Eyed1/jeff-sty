@@ -4,9 +4,15 @@
 \newif\ifnormalmargin\normalmarginfalse
 \newif\iffancyhdr\fancyhdrtrue
 \newif\iftikzsetup\tikzsetuptrue
-\newif\ifboxthm\boxthmtrue
+\newif\ifboxthm\boxthmfalse
 \newif\ifcolorthm\colorthmfalse
 \newif\ifnumberedlemma\numberedlemmafalse
+\newif\ifcodeformat\codeformattrue
+
+\DeclareOption{bare}{
+    \smallmarginfalse
+    \normalmargintrue
+}
 
 \DeclareOption{default}{
     \fancyhdrtrue
@@ -19,6 +25,7 @@
     \fancyhdrtrue
     \normalmargintrue
     \smallmarginfalse
+    \boxthmtrue
     \tikzsetuptrue
     \colorthmtrue
 }
@@ -27,6 +34,7 @@
     \fancyhdrtrue
     \normalmargintrue
     \smallmarginfalse
+    \boxthmtrue
     \tikzsetuptrue
     \colorthmfalse
 }
@@ -48,6 +56,7 @@
 \usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{amsfonts}
 \usepackage{authblk}
 \usepackage{enumitem}
 \usepackage{graphicx}
@@ -143,13 +152,15 @@
     \setlength{\marginparwidth}{2cm}
     \setlength{\headsep}{0.4cm}
     \setlength{\headheight}{1.0cm}
+    \setlength{\footskip}{1.3cm}
 
 \fi
 \ifnormalmargin
-    \geometry{letterpaper, margin=1in} 
+\geometry{letterpaper, top=1in, bottom=1.25in, left=1in, right=1in} 
     \setlength{\marginparwidth}{2cm}
     \setlength{\headsep}{0.7cm}
     \setlength{\headheight}{1.7cm}
+    \setlength{\footskip}{1.5cm}
 
 \fi
 
@@ -158,8 +169,13 @@
     \pagestyle{fancy}
     \lhead{\thetitle}
     \rhead{\theauthor}
-    \renewcommand{\headrulewidth}{1.5pt}
+    \renewcommand{\headrulewidth}{1.2pt}
 %   \setlength{\headrulewidth}{2pt}
+\fi
+
+\ifcodeformat
+\usepackage{listings}
+
 \fi
 
 \iftikzsetup
@@ -375,7 +391,7 @@
         spaceabove=1pt,
         spacebelow=1pt,
         mdframed={style=mdgreenboxleft},
-        bodyfont=\normalfont,
+        bodyfont=\small\normalfont,
         headpunct={.},
         postheadspace={5pt}
     ]{greenboxleft}
@@ -518,7 +534,41 @@
     \declaretheorem[style=definition, numbered=no]{walkthrough}
     \declaretheorem[style=definition, numberwithin=section]{problem}
 
-    
 \fi
+
+\else
+
+\declaretheoremstyle[
+    headfont=\bfseries,
+    spaceabove=5pt,
+    spacebelow=1pt,
+    bodyfont=\normalfont,
+    headpunct={.},
+    postheadspace={5pt}
+]{thmstyle}
+
+\declaretheoremstyle[
+    headfont=\bfseries,
+    spaceabove=3pt,
+    spacebelow=1pt,
+    bodyfont=\small\normalfont,
+    headpunct={.},
+    postheadspace={5pt}
+]{remstyle}
+
+\declaretheorem[style=thmstyle,numberwithin=section]{theorem}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{corollary}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{proposition}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{lemma}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{example}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{definition}
+\declaretheorem[style=thmstyle,numberwithin=section,sibling=theorem]{exercise}
+\declaretheorem[style=remstyle,numbered=no]{remark}
+\declaretheorem[style=remstyle,numbered=no]{claim}
+
+\declaretheorem[style=definition, numbered=no]{walkthrough}
+\declaretheorem[style=definition, numberwithin=section]{problem}
+\declaretheorem[style=definition, numberwithin=section]{solution}
+\declaretheorem[style=definition, name=Solution, numbered=no]{solution*}
 
 \fi
